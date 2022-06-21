@@ -1,40 +1,17 @@
+require('dotenv').config();
 const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
-
-// Create a server:
+const mongoose  = require('mongoose');
 const app = express();
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema, graphql, GraphQLSchema } = require('graphql');
+const RootQuery = require('./graphql/schema');
 
-// Create a schema and a root resolver:
-const schema = buildSchema(`
-    type Book {
-        title: String!
-        author: String!
-    }
-
-    type Query {
-        books: [Book]
-    }
-`);
-
-const rootValue = {
-    books: [
-        {
-            title: "The Name of the Wind",
-            author: "Patrick Rothfuss",
-        },
-        {
-            title: "The Wise Man's Fear",
-            author: "Patrick Rothfuss",
-        }
-    ]
-};
-
-// Use those to handle incoming requests:
-app.use(graphqlHTTP({
-    schema,
-    rootValue
+mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true }, ()=>console.log('Mongodb is connected'));
+ 
+app.use('/graphql', graphqlHTTP({
+    schema: new GraphQLSchema({query: RootQuery}),
+    graphiql: true,
 }));
 
-// Start the server:
-app.listen(5555, () => console.log("Server started on port 5555"));
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
