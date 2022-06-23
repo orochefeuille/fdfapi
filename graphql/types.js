@@ -5,7 +5,7 @@ const {
 } = require('graphql');
 
 const CheeseType = new GraphQLObjectType({
-    name: 'CheeseType',
+    name: 'Cheese',
     fields: ()=> ({
       id: {type: GraphQLID},
       name: {type: GraphQLString}
