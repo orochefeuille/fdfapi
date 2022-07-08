@@ -9,7 +9,8 @@ const CheeseType = new GraphQLObjectType({
     name: 'Cheese',
     fields: ()=> ({
       id: {type: new GraphQLNonNull(GraphQLID)},
-      name: {type: new GraphQLNonNull(GraphQLString)}
+      name: {type: new GraphQLNonNull(GraphQLString)},
+      milk: {type: new GraphQLNonNull(GraphQLID)},
     }),
 });
 

@@ -5,6 +5,10 @@ const cheeseSchema = new Schema({
     name: {
         type: String,
         required: true,
+    },
+    milk: {
+        type: String,
+        required: true,
     }
 });
 

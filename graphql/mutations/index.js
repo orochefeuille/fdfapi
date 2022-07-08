@@ -5,9 +5,9 @@ const Cheese = require('../../models/Cheese')
 const addCheese = {
     name: 'addCheese',
     type: CheeseType,
-    args: { name: {type: GraphQLString}},
-    resolve: async(parent, { name }, context) => {
-        const cheese = new Cheese({ name });
+    args: { name: {type: GraphQLString}, milk: {type: GraphQLString}},
+    resolve: async(parent, { name, milk }, context) => {
+        const cheese = new Cheese({ name, milk });
         const newCheese = await cheese.save();
         return newCheese;
     }
@@ -26,9 +26,9 @@ const deleteCheese = {
 const updateCheese = {
     name: 'updateCheese',
     type: CheeseType,
-    args: { id: { type: GraphQLID }, name: { type: GraphQLString }},
-    resolve: async(parent, { id, name }, context) => {
-        const updatedCheese = await Cheese.findByIdAndUpdate( id, { name } );
+    args: { id: { type: GraphQLID }, name: { type: GraphQLString }, milk: { type: GraphQLString }},
+    resolve: async(parent, { id, name, milk }, context) => {
+        const updatedCheese = await Cheese.findByIdAndUpdate( id, { name, milk } );
         return updatedCheese;
     }
 };
